@@ -27,31 +27,25 @@ let playerWin;
 function playRound(userPick, compPick) {
     userPick = userPick.toLowerCase();
     if (compPick === userPick) {
-        return 'it\'s a tie!';
+        return 'tie';
     }
     else if (compPick === 'rock' && userPick === 'paper') {
-        let playerWin = true;
-        return 'Paper covers rock! You win!';
+        return 'win';
     }
     else if (compPick === 'rock' && userPick === 'scissors') {
-        let playerWin = false;
-        return 'Your scissors are smashed by rock! You lose!';
+        return 'lose';
     }
     else if (compPick === 'paper' && userPick === 'rock') {
-        let playerWin = false;
-        return 'Go to sleep little rock, you\'re covered by paper!';
+        return 'lose';
     }
     else if (compPick === 'paper' && userPick === 'scissors') {
-        let playerWin = true;
-        return 'Snip, snip, snip, you\'re making snowflakes!';
+        return 'win';
     }
     else if (compPick === 'scissors' && userPick === 'rock') {
-        let playerWin = true;
-        return 'You ruined a perfectly good pair of scissors';
+        return 'win';
     }
     else if (compPick === 'scissors' && userPick === 'paper') {
-        let playerWin = false;
-        return 'I brought the "good" scissors today, bitch!';
+        return 'lose';
     }
     else {
         return 'does not compute';
@@ -65,15 +59,18 @@ function game() {
     for (let i = 0; i < 5; i++) {
         let userPick = prompt('Rock, paper, scissors, and shoot!', '');
         compPick = getComputerChoice();
-        result = playRound(userPick,compPick);
-        if (playerWin) {
+        let result = playRound(userPick,compPick);
+        console.log(result);
+        if (result === 'win') {
             userScore += 1;
+            alert(`You played ${userPick}, I played ${compPick}. You win. Let's go ${4-i} more`);
         }
-        else if (!playerWin) {
+        else if (result === 'lose') {
             compScore += 1;
+            alert(`You played ${userPick}, I played ${compPick}. You lose Let's go ${4-i} more`);
         }
-        else {
-            return
+        else if (result === 'tie') {
+            alert('tie!');
         }
         alert(`Computer score: ${compScore} \n User score: ${userScore}`)
         console.log(`Computer score: ${compScore} \n User score: ${userScore}`);
@@ -82,7 +79,8 @@ function game() {
         return `Not your day! My score: ${compScore} Your score: ${userScore}`;
     }
     else {
-        return `You got lucky... My score: ${compScore} Your score: ${userScore}`
+        return `You got lucky... My score: ${compScore} Your score: ${userScore}`;
     }
 }
+
 
