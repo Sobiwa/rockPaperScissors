@@ -11,7 +11,6 @@
 
 function getComputerChoice() {
     let num = Math.floor(Math.random()*9);
-    console.log(num);
      if (num < 3) {
         return 'rock';
      }
@@ -22,33 +21,38 @@ function getComputerChoice() {
         return 'scissors';
     }
 }
-let playerWin;
 
 function playRound(userPick, compPick) {
-    userPick = userPick.toLowerCase();
-    if (compPick === userPick) {
-        return 'tie';
-    }
-    else if (compPick === 'rock' && userPick === 'paper') {
-        return 'win';
-    }
-    else if (compPick === 'rock' && userPick === 'scissors') {
-        return 'lose';
-    }
-    else if (compPick === 'paper' && userPick === 'rock') {
-        return 'lose';
-    }
-    else if (compPick === 'paper' && userPick === 'scissors') {
-        return 'win';
-    }
-    else if (compPick === 'scissors' && userPick === 'rock') {
-        return 'win';
-    }
-    else if (compPick === 'scissors' && userPick === 'paper') {
-        return 'lose';
+    if (userPick === null) {
+        alert('you scared?')
+        return 'null';
     }
     else {
-        return 'does not compute';
+        userPick = userPick.toLowerCase();
+        if (compPick === userPick) {
+            return 'tie';
+        }
+        else if (compPick === 'rock' && userPick === 'paper') {
+            return 'win';
+        }
+        else if (compPick === 'rock' && userPick === 'scissors') {
+            return 'lose';
+        }
+        else if (compPick === 'paper' && userPick === 'rock') {
+            return 'lose';
+        }
+        else if (compPick === 'paper' && userPick === 'scissors') {
+            return 'win';
+        }
+        else if (compPick === 'scissors' && userPick === 'rock') {
+            return 'win';
+        }
+        else if (compPick === 'scissors' && userPick === 'paper') {
+            return 'lose';
+        }
+        else {
+            return 'empty';
+        }
     }
 }
 
@@ -67,20 +71,35 @@ function game() {
         }
         else if (result === 'lose') {
             compScore += 1;
-            alert(`You played ${userPick}, I played ${compPick}. You lose Let's go ${4-i} more`);
+            alert(`You played ${userPick}, I played ${compPick}. You lose. Let's go ${4-i} more`);
         }
         else if (result === 'tie') {
             alert('tie!');
         }
-        alert(`Computer score: ${compScore} \n User score: ${userScore}`)
-        console.log(`Computer score: ${compScore} \n User score: ${userScore}`);
+        else if (result == 'null') {
+            return
+        }
+        else {
+            i = --i;
+            alert('Play fair!');
+        }
+        alert(`Computer score: ${compScore} \nUser score: ${userScore}`)
+        console.log(`Computer played ${compPick} \nUser played ${userPick}`);
+        console.log(`Computer score: ${compScore} \nUser score: ${userScore}`);
+        console.log('next round...');
     }
     if (compScore > userScore) {
+        alert(`Not your day! My score: ${compScore} Your score: ${userScore}`);
         return `Not your day! My score: ${compScore} Your score: ${userScore}`;
     }
-    else {
+    else if (compScore <userScore) {
+        alert(`You got lucky... My score: ${compScore} Your score: ${userScore}`);
         return `You got lucky... My score: ${compScore} Your score: ${userScore}`;
     }
+    else {
+        alert(`It's a tie! What a wast of time. My score: ${compScore} Your score: ${userScore}`);
+        return `It's a tie! What a wast of time. My score: ${compScore} Your score: ${userScore}`;
+    }  
 }
 
 
