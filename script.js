@@ -22,6 +22,103 @@ function getComputerChoice() {
     }
 }
 
+function remove() {
+    option.classList.remove('clicked');
+}
+
+const beginPromptContainer = document.querySelector('#beginPrompt');
+beginPromptContainer.style.cssText = 'display: flex; gap: 8px; padding: 0px 0px 100px 0px'
+const beginPrompt = document.createElement('p');
+beginPrompt.textContent = 'Care to play a game?';
+beginPromptContainer.appendChild(beginPrompt);
+
+const scoreContainer = document.querySelector('#score');
+
+function createScoreboard(){    
+    const userScoreDisplay = document.createElement('div');
+    userScoreDisplay.style.cssText = 'display:flex; flex-direction: column; gap: 8px';
+    scoreContainer.appendChild(userScoreDisplay);
+        const userScoreString = document.createElement('p');
+        userScoreString.textContent = 'Your Score: ';
+        const userScoreValue = document.createElement('p');
+        userScoreValue.textContent = `${userScore}`;
+        userScoreDisplay.appendChild(userScoreString);
+        userScoreDisplay.appendChild(userScoreValue);
+        
+    const compScoreDisplay = document.createElement('div');
+    compScoreDisplay.style.cssText = 'display:flex; gap: 8px';
+    scoreContainer.appendChild(compScoreDisplay);
+        const compScoreString = document.createElement('p');
+        compScoreString.textContent = 'My Score: ';
+        const compScoreValue = document.createElement('p');
+        compScoreValue.textContent = `${compScore}`;
+        compScoreDisplay.appendChild(userScoreString);
+        compScoreDisplay.appendChild(userScoreValue);
+};
+
+const yesButton = document.createElement('button');
+yesButton.classList.add('yesButton');
+yesButton.textContent = 'Yes!';
+beginPromptContainer.appendChild(yesButton);
+
+const rockPhrase = document.createElement('p');
+rockPhrase.classList.add('countdown');
+rockPhrase.textContent = 'ROCK';
+
+const paperPhrase = document.createElement('p');
+paperPhrase.classList.add('countdown');
+paperPhrase.textContent = 'PAPER';
+
+const scissorsPhrase = document.createElement('p');
+scissorsPhrase.classList.add('countdown');
+scissorsPhrase.textContent = 'SCISSORS';
+
+const shootPhrase = document.createElement('p');
+shootPhrase.classList.add('countdown');
+shootPhrase.textContent = 'SHOOT!';
+
+const countdownArray = [rockPhrase, paperPhrase, scissorsPhrase, shootPhrase];
+
+function rpsCountdown() {
+    for (let i = 0; i < countdownArray.length ; i++) {
+        let phrase = countdownArray[i];
+        console.log(phrase);
+        setTimeout(() => {
+               beginPromptContainer.appendChild(phrase)
+        }, (i + 1) * 500);
+        setTimeout(() => {
+            beginPromptContainer.removeChild(phrase)
+        }, (i + 2) * 500);
+    };
+};
+
+yesButton.addEventListener('click', () => {
+    beginPromptContainer.removeChild(beginPrompt);
+    beginPromptContainer.removeChild(yesButton);
+    rpsCountdown();
+
+
+});
+
+// psuedo code 
+// player clicks yes
+// begins game
+// displays score
+// player clicks an option
+// plays round
+// first player to 5 wins
+
+
+const options = document.querySelectorAll('.option');
+console.log(options);
+options.forEach ((option) => {
+    option.addEventListener('click', () => {
+        console.log(option.id);
+        option.classList.add('clicked');
+        setTimeout(() => option.classList.remove('clicked'),150);
+    });
+});
+
 function playRound(userPick, compPick) {
     if (userPick === null) {
         alert('you scared?')
@@ -101,5 +198,3 @@ function game() {
         return `It's a tie! What a wast of time. My score: ${compScore} Your score: ${userScore}`;
     }  
 }
-
-
