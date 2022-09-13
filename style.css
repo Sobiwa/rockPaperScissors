@@ -1,5 +1,5 @@
 html {
-    background-color: rgb(159, 98, 217);
+    background-color: rgb(28, 116, 125);
     color: whitesmoke;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     height: 100vh;
@@ -24,6 +24,10 @@ h1 {
     height: 3em;
     padding: 2em;
     margin-bottom: 8em;
+}
+
+.roundResults {
+    font-size: 24px;
 }
 
 .playAgain {

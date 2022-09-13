@@ -9,13 +9,12 @@ const beginPromptContainer = document.querySelector('#beginPrompt');
         yesButton.textContent = 'Yes!';
         beginPromptContainer.appendChild(yesButton);
 
-    const gameResultsMessage = document.createElement('p');
     const roundResults = document.createElement('p');
+        roundResults.classList.add('roundResults');
     const playAgain = document.createElement('div');
         playAgain.classList.add('playAgain');
     const playAgainButton = document.createElement('button');
     beginPromptContainer.appendChild(roundResults);
-    beginPromptContainer.appendChild(gameResultsMessage);
     beginPromptContainer.appendChild(playAgain);
 
 const options = document.querySelectorAll('.option');
@@ -179,7 +178,6 @@ yesButton.addEventListener('click', () => {
 playAgainButton.addEventListener('click', () => {
     rpsCountdown(300);
     roundResults.textContent = '';
-    gameResultsMessage.textContent = '';
     playAgain.removeChild(playAgainButton);
     officialUserScore = 0;
     officialCompScore = 0;
