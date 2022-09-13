@@ -1,29 +1,28 @@
 html {
-    background-color: rgb(28, 116, 125);
-    color: whitesmoke;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(222, 222, 222);
+    color: darkgray;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     height: 100vh;
 }
 body {
-    display: flex; 
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
     text-align: center;
     height: 100vh;
 }
 
 h1 {
-    flex: 1 1 auto;
-    margin: 1em 1em 0em 1em;
-    height: 5em;
+    padding: 1em 1em 0em 1em;
+    height: 3em;
 }
 
 #beginPrompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
-    height: 3em;
-    padding: 2em;
-    margin-bottom: 8em;
+    font-size: 24px;
+    height: 5em;
 }
 
 .roundResults {
@@ -35,33 +34,36 @@ h1 {
     height:1em;
 }
 
-.yesButton {
+#beginPrompt button.yesButton {
     border-radius: 10px;
 }
+
 .playAgainButton {
     border-radius: 10px;
+    margin: 12px;
 }
 .optionContainer {
     display: flex;
-    height: 13em;
-    flex: 1 1 auto;
+    height: 150px;
+    /* flex: 1 1 auto; */
     justify-content: center;
     align-items: center;
     gap: 2em;
+    margin-bottom: 8em;
 }
 
 .option {
-    width: 200px;
-    height: 200px;
-    border: dotted black;
+    width: 150px;
+    height: 150px;
+    border: 0.5px solid rgba(152, 144, 144, 0.967);
     background-color: white;
     border-radius: 15px;
 }
 
 .option > img {
+    width: 150px;
+    height: 150px;
     border-radius: 15px;
-    width: 200px;
-    height: 200px;
 }
 
 .clicked::after {
@@ -86,9 +88,34 @@ h1 {
 
 
 #score {
-    box-sizing: border-box;
-    justify-self: flex-end;
-    flex: 1 1 auto;
-    height: 10em;
-    width: 5 em;
+    display:flex;
+    justify-content: center;
+    gap: 3em;
+    height: 90px;
+    margin: 2em 1em 1em 1em;
+}
+
+.scoreDisplay {
+    display:flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items:center;
+    gap: 3px;
+    width: 90px;
+    height: 90px;
+    
+}
+.scoreValue {
+    color: rgb(44, 44, 44);
+    height:50px;
+    width:50px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    font-size: 32px;
+    border: solid darkgray 1px;
+}
+
+p {
+    margin: 0;
 }

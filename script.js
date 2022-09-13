@@ -6,6 +6,7 @@ const beginPromptContainer = document.querySelector('#beginPrompt');
         beginPromptContainer.appendChild(beginPrompt);
     const yesButton = document.createElement('button');
         yesButton.classList.add('yesButton');
+        yesButton.style.cssText = 'padding: 8px 16px; font-weight: bold; margin: 16px; width: 100px;';
         yesButton.textContent = 'Yes!';
         beginPromptContainer.appendChild(yesButton);
 
@@ -14,6 +15,7 @@ const beginPromptContainer = document.querySelector('#beginPrompt');
     const playAgain = document.createElement('div');
         playAgain.classList.add('playAgain');
     const playAgainButton = document.createElement('button');
+        playAgainButton.style.cssText = 'padding: 8px 16px;'
         playAgainButton.classList.add('playAgainButton');
     beginPromptContainer.appendChild(roundResults);
     beginPromptContainer.appendChild(playAgain);
@@ -23,20 +25,21 @@ const options = document.querySelectorAll('.option');
 
 const scoreContainer = document.querySelector('#score');
     const userScoreDisplay = document.createElement('div');
-    userScoreDisplay.style.cssText = 'display:flex; gap: 8px';
+    userScoreDisplay.classList.add('scoreDisplay');
     scoreContainer.appendChild(userScoreDisplay);
         const userScoreString = document.createElement('p');
         const officialUserScoreDisplay = document.createElement('p');
+        officialUserScoreDisplay.classList.add('scoreValue');
         userScoreDisplay.appendChild(userScoreString);
-        userScoreDisplay.appendChild(officialUserScoreDisplay);
+        
         
     const compScoreDisplay = document.createElement('div');
-    compScoreDisplay.style.cssText = 'display:flex; gap: 8px';
+    compScoreDisplay.classList.add('scoreDisplay');
     scoreContainer.appendChild(compScoreDisplay);
         const compScoreString = document.createElement('p'); 
         const officialCompScoreDisplay = document.createElement('p');
+        officialCompScoreDisplay.classList.add('scoreValue');
         compScoreDisplay.appendChild(compScoreString);
-        compScoreDisplay.appendChild(officialCompScoreDisplay);
 
 
 
@@ -51,8 +54,8 @@ const countdownArray = ['ROCK', 'PAPER', 'SCISSORS', 'SHOOT!'];
 //Functions
 function startGame() {
     rpsCountdown(300);
-    userScoreString.textContent = 'Your Score: ';
-    compScoreString.textContent = 'My Score: ';
+    userScoreString.textContent = 'Your Score';
+    compScoreString.textContent = 'My Score';
     options.forEach((option) => {
         option.addEventListener('click', (e) => {
             roundResults.textContent = '';
@@ -173,6 +176,8 @@ options.forEach ((option) => {
 yesButton.addEventListener('click', () => {
     beginPromptContainer.removeChild(beginPrompt);
     beginPromptContainer.removeChild(yesButton);
+    compScoreDisplay.appendChild(officialCompScoreDisplay);
+    userScoreDisplay.appendChild(officialUserScoreDisplay);
     startGame();
 });
 
