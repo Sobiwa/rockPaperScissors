@@ -33,7 +33,13 @@ h1 {
 .playAgain {
     box-sizing: border-box;
     height:1em;
+}
 
+.yesButton {
+    border-radius: 10px;
+}
+.playAgainButton {
+    border-radius: 10px;
 }
 .optionContainer {
     display: flex;

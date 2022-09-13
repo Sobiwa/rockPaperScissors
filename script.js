@@ -14,6 +14,7 @@ const beginPromptContainer = document.querySelector('#beginPrompt');
     const playAgain = document.createElement('div');
         playAgain.classList.add('playAgain');
     const playAgainButton = document.createElement('button');
+        playAgainButton.classList.add('playAgainButton');
     beginPromptContainer.appendChild(roundResults);
     beginPromptContainer.appendChild(playAgain);
 
