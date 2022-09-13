@@ -1,28 +1,39 @@
 html {
-    background-color: blueviolet;
+    background-color: rgb(159, 98, 217);
     color: whitesmoke;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     height: 100vh;
 }
 body {
-    display: flex;
+    display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     height: 100vh;
-    gap: 5em;
 }
 
 h1 {
     flex: 1 1 auto;
-    margin: 3em 1em 0em 1em;
-    
+    margin: 1em 1em 0em 1em;
+    height: 5em;
+}
+
+#beginPrompt {
+    box-sizing: border-box;
+    height: 3em;
+    padding: 2em;
+    margin-bottom: 8em;
+}
+
+.playAgain {
+    box-sizing: border-box;
+    height:1em;
+
 }
 .optionContainer {
-    margin-top: -2em;
     display: flex;
-    height: 5em;
+    height: 13em;
     flex: 1 1 auto;
     justify-content: center;
     align-items: center;
@@ -63,7 +74,11 @@ h1 {
 }
 
 
-.score {
+
+#score {
+    box-sizing: border-box;
+    justify-self: flex-end;
     flex: 1 1 auto;
-    height: 5em;
+    height: 10em;
+    width: 5 em;
 }

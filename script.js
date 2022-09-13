@@ -1,125 +1,168 @@
-// retrieve input from user
-// generate random computer choice
-// determine who wins
-// return 'Paper covers rock! You win!';
-// 'Your scissors are smashed by rock! You lose!'
-// 'Go to sleep little rock, you\'re covered by paper!'
-// 'Snip, snip, snip, you\'re making snowflakes!'
-// 'You ruined a perfectly good pair of scissors'
-// 'I brought the "good" scissors today, bitch!'
 
-
-function getComputerChoice() {
-    let num = Math.floor(Math.random()*9);
-     if (num < 3) {
-        return 'rock';
-     }
-    else if (num < 6) {
-        return 'paper';
-    }
-    else {
-        return 'scissors';
-    }
-}
-
-
-function remove() {
-    option.classList.remove('clicked');
-}
-
+//Global Variables
 const beginPromptContainer = document.querySelector('#beginPrompt');
-beginPromptContainer.style.cssText = 'display: flex; gap: 8px; padding: 0px 0px 100px 0px'
-const beginPrompt = document.createElement('p');
-beginPrompt.textContent = 'Care to play a game?';
-beginPromptContainer.appendChild(beginPrompt);
+    const beginPrompt = document.createElement('p');
+        beginPrompt.textContent = 'Care to play a game?';
+        beginPromptContainer.appendChild(beginPrompt);
+    const yesButton = document.createElement('button');
+        yesButton.classList.add('yesButton');
+        yesButton.textContent = 'Yes!';
+        beginPromptContainer.appendChild(yesButton);
+
+    const gameResultsMessage = document.createElement('p');
+    const roundResults = document.createElement('p');
+    const playAgain = document.createElement('div');
+        playAgain.classList.add('playAgain');
+    const playAgainButton = document.createElement('button');
+    beginPromptContainer.appendChild(roundResults);
+    beginPromptContainer.appendChild(gameResultsMessage);
+    beginPromptContainer.appendChild(playAgain);
+
+const options = document.querySelectorAll('.option');
+
 
 const scoreContainer = document.querySelector('#score');
-
-function createScoreboard(){    
     const userScoreDisplay = document.createElement('div');
     userScoreDisplay.style.cssText = 'display:flex; gap: 8px';
     scoreContainer.appendChild(userScoreDisplay);
         const userScoreString = document.createElement('p');
-        userScoreString.textContent = 'Your Score: ';
-        let userScoreValue = document.createElement('p');
-        userScoreValue.textContent =0 ; 
+        const officialUserScoreDisplay = document.createElement('p');
         userScoreDisplay.appendChild(userScoreString);
-        userScoreDisplay.appendChild(userScoreValue);
-        userScoreValue.textContent = 1;
+        userScoreDisplay.appendChild(officialUserScoreDisplay);
         
     const compScoreDisplay = document.createElement('div');
     compScoreDisplay.style.cssText = 'display:flex; gap: 8px';
     scoreContainer.appendChild(compScoreDisplay);
-        const compScoreString = document.createElement('p');
-        compScoreString.textContent = 'My Score: ';
-        let compScoreValue = document.createElement('p');
-        compScoreValue.textContent = 0;
+        const compScoreString = document.createElement('p'); 
+        const officialCompScoreDisplay = document.createElement('p');
         compScoreDisplay.appendChild(compScoreString);
-        compScoreDisplay.appendChild(compScoreValue);
+        compScoreDisplay.appendChild(officialCompScoreDisplay);
+
+
+
+playAgainButton.textContent = 'Play again?';
+let compPickArray;
+let officialUserScore = 0;
+let officialCompScore = 0;
+let roundResultsMessage;
+const countdownArray = ['ROCK', 'PAPER', 'SCISSORS', 'SHOOT!'];
+//Global Variables
+
+//Functions
+function startGame() {
+    rpsCountdown(300);
+    userScoreString.textContent = 'Your Score: ';
+    compScoreString.textContent = 'My Score: ';
+    options.forEach((option) => {
+        option.addEventListener('click', (e) => {
+            roundResults.textContent = '';
+            let play = e.target.id;
+            let officialCompChoice = getComputerChoice();
+            if (officialUserScore < 5 && officialCompScore < 5) {
+                let outcome = playRound(play, officialCompChoice);
+                addPoint(outcome);
+                if (officialUserScore > 4) {
+                    rpsCountdown(250, roundResultsMessage, 'Congrats, you win!');
+                    setTimeout(() => {
+                    playAgain.appendChild(playAgainButton)
+                    }, 2750);
+                } else if (officialCompScore > 4) {
+                    rpsCountdown(250, roundResultsMessage, 'HA HA, I win!');
+                    setTimeout(() => {
+                        playAgain.appendChild(playAgainButton)
+                        }, 2750);
+                } else {
+                    rpsCountdown(200, roundResultsMessage);
+                }
+                setTimeout(() => { 
+                officialUserScoreDisplay.textContent = `${officialUserScore}`;
+                officialCompScoreDisplay.textContent = `${officialCompScore}`;
+                }, 1000);
+            };
+        });
+    });
+}; 
+
+function getComputerChoice() {
+    let num = Math.floor(Math.random() * 9);
+    if (num < 3) {
+        return 'rock';
+    } else if (num < 6) {
+        return 'paper';
+    } else {
+        return 'scissors';
+    }
 };
 
-const yesButton = document.createElement('button');
-yesButton.classList.add('yesButton');
-yesButton.textContent = 'Yes!';
-beginPromptContainer.appendChild(yesButton);
-
-const rockPhrase = document.createElement('p');
-rockPhrase.classList.add('countdown');
-rockPhrase.textContent = 'ROCK';
-
-const paperPhrase = document.createElement('p');
-paperPhrase.classList.add('countdown');
-paperPhrase.textContent = 'PAPER';
-
-const scissorsPhrase = document.createElement('p');
-scissorsPhrase.classList.add('countdown');
-scissorsPhrase.textContent = 'SCISSORS';
-
-const shootPhrase = document.createElement('p');
-shootPhrase.classList.add('countdown');
-shootPhrase.textContent = 'SHOOT!';
-
-const countdownArray = [rockPhrase, paperPhrase, scissorsPhrase, shootPhrase];
-
-function rpsCountdown() {
-    for (let i = 0; i < countdownArray.length ; i++) {
+function rpsCountdown(ms, message, message2) {
+    if (countdownArray.length > 4) {
+        if (countdownArray.length > 5) {
+            countdownArray.pop();
+        };
+        countdownArray.pop();
+    };
+    if (message) {
+        countdownArray.push(message);
+        if (message2) {
+            countdownArray.push(message2);
+        };
+    };
+    for (let i = 0; i < countdownArray.length; i++) {
         let phrase = countdownArray[i];
-        console.log(phrase);
+        if (i > 4) {
+            setTimeout(() => {
+                roundResults.textContent = phrase;
+            }, ((i + 1) * ms) + (ms * 4));
+        } else {
         setTimeout(() => {
-               beginPromptContainer.appendChild(phrase)
-        }, (i + 1) * 500);
-        setTimeout(() => {
-            beginPromptContainer.removeChild(phrase)
-        }, (i + 2) * 500);
+            roundResults.textContent = phrase;
+        }, (i + 1) * ms);
+        };
     };
 };
 
-yesButton.addEventListener('click', () => {
-    beginPromptContainer.removeChild(beginPrompt);
-    beginPromptContainer.removeChild(yesButton);
-    rpsCountdown();
-    game();
-});
+function playRound(userPick, compPick) {
+    if (compPick === userPick) {
+        compPick = capitalizeFirstLetter(compPick);
+        roundResultsMessage = `${compPick} and ${userPick}, we're so in sync!`
+        return 'tie';
+    } else if (compPick === 'rock' && userPick === 'paper') {
+        roundResultsMessage = 'Ugh, my rock is absolutely useless under your paper.'
+        return 'win';
+    } else if (compPick === 'rock' && userPick === 'scissors') {
+        roundResultsMessage = 'Your scissors are smashed by rock! You lose!'
+        return 'lose';
+    } else if (compPick === 'paper' && userPick === 'rock') {
+        roundResultsMessage = 'Go to sleep little rock, you\'re covered by paper!';
+        return 'lose';
+    } else if (compPick === 'paper' && userPick === 'scissors') {
+        roundResultsMessage = 'Snip, snip, snip, you\'re making snowflakes!'
+        return 'win';
+    } else if (compPick === 'scissors' && userPick === 'rock') {
+        roundResultsMessage = 'You ruined a perfectly good pair of scissors!'
+        return 'win';
+    } else if (compPick === 'scissors' && userPick === 'paper') {
+        roundResultsMessage = 'I brought the "good" scissors today, bitch!'
+        return 'lose';
+    };
+};
 
+function addPoint(result) {
+    if (result === 'win') {
+        officialUserScore += 1;
+    } else if (result === 'lose') {
+        officialCompScore += 1;
+    } else if (result === 'tie') {
+        return;
+    }
+};
 
-// psuedo code 
-// player clicks yes
-// begins game
-// displays score
-// player clicks an option
-// plays round
-// first player to 5 wins
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+//Functions
 
-const ROCK = document.querySelector('#rock');
-const PAPER = document.querySelector('#paper');
-const SCISSORS = document.querySelector('#scissors');
-
-
-
-
-
-const options = document.querySelectorAll('.option');
-console.log(options);
+//EventListeners
 options.forEach ((option) => {
         option.addEventListener('click', () => {
         option.classList.add('clicked');
@@ -127,155 +170,19 @@ options.forEach ((option) => {
     });
 });
 
-// function getCHOICE() {
-//     options.forEach (option) => {
-//         option.addEventListener('click', function getUserChoice(option.id) {
-//             if option.id == 'rock'
-//         });
-//     };
-// };
-// function getUserChoice(optionID) {
-//     if (optionID == 'rock') return 'rock';
-//     else if (optionID == 'paper') return 'paper';
-//     else if (optionID == 'scissors') return 'scissors';
-// };
+yesButton.addEventListener('click', () => {
+    beginPromptContainer.removeChild(beginPrompt);
+    beginPromptContainer.removeChild(yesButton);
+    startGame();
+});
 
-function playRound(userPick, compPick) {
-    if (userPick === null) {
-        alert('you scared?')
-        return 'null';
-    }
-    else {
-        // userPick = userPick.toLowerCase();
-        if (compPick === userPick) {
-            return 'tie';
-        }
-        else if (compPick === 'rock' && userPick === 'paper') {
-            return 'win';
-        }
-        else if (compPick === 'rock' && userPick === 'scissors') {
-            return 'lose';
-        }
-        else if (compPick === 'paper' && userPick === 'rock') {
-            return 'lose';
-        }
-        else if (compPick === 'paper' && userPick === 'scissors') {
-            return 'win';
-        }
-        else if (compPick === 'scissors' && userPick === 'rock') {
-            return 'win';
-        }
-        else if (compPick === 'scissors' && userPick === 'paper') {
-            return 'lose';
-        }
-        else {
-            return 'empty';
-        }
-    }
-};
-
-function addPoint(result) {
-    if (result === 'win') {
-        userScore += 1;
-        userScoreValue.textContent += 1;
-    }
-    else if (result === 'lose') {
-        compScore += 1;
-        compScoreValue.textContent += 1;
-    }
-    else if (result === 'tie') {
-    }
-};
-
-function game() {
-    createScoreboard();
-    let compScore = 0;
-    let userScore = 0;
-    // while (compScore < 5 && userScore < 5) {
-        ROCK.addEventListener('click', () => {
-            let result = playRound('rock', getComputerChoice());
-            if (result === 'win') {
-                userScore += 1;
-                userScoreDisplay.removeChild(userScoreValue);
-                const userScoreValue = document.createElement(p);
-                userScoreValue.textContent = `${userScore}`;
-                userScoreDisplay.appendChild(userScoreValue);
-            }
-            else if (result === 'lose') {
-                compScore += 1;
-                userScore += 1;
-                userScoreDisplay.removeChild(userScoreValue);
-                const userScoreValue = document.createElement(p);
-                userScoreValue.textContent = `${userScore}`;
-                userScoreDisplay.appendChild(userScoreValue);
-            }
-            else if (result === 'tie') {
-            }
-        });
-        PAPER.addEventListener('click', () => {
-            let result = playRound('paper', getComputerChoice());
-            if (result === 'win') {
-                userScore += 1;
-                userScoreValue.textContent += 1;
-            }
-            else if (result === 'lose') {
-                compScore += 1;
-                compScoreValue.textContent += 1;
-            }
-            else if (result === 'tie') {
-            }
-        });
-        SCISSORS.addEventListener('click', () => {
-                let result = playRound('scissors', getComputerChoice());
-                if (result === 'win') {
-                    userScore += 1;
-                    userScoreValue.textContent += 1;
-                }
-                else if (result === 'lose') {
-                    compScore += 1;
-                    compScoreValue.textContent += 1;
-                }
-                else if (result === 'tie') {
-                }
-        });
-};
-
-        // let userPick = getUserChoice();
-        // let compPick = getComputerChoice();
-        // let result = playRound(userPick,compPick);
-        // console.log(result);
-        // if (result === 'win') {
-        //     userScore += 1;
-            // alert(`You played ${userPick}, I played ${compPick}. You win. Let's go ${4-i} more`);
-        // }
-        // else if (result === 'lose') {
-        //     compScore += 1;
-            // alert(`You played ${userPick}, I played ${compPick}. You lose. Let's go ${4-i} more`);
-        // }
-        // else if (result === 'tie') {
-            // alert('tie!');
-        // }
-        // else if (result == 'null') {
-        //     return
-        // }
-        // else {
-        //     return;
-        // }
-        // alert(`Computer score: ${compScore} \nUser score: ${userScore}`)
-//         console.log(`Computer played ${compPick} \nUser played ${userPick}`);
-//         console.log(`Computer score: ${compScore} \nUser score: ${userScore}`);
-//         console.log('next round...');
-//     }
-//     if (compScore > userScore) {
-//         alert(`Not your day! My score: ${compScore} Your score: ${userScore}`);
-//         return `Not your day! My score: ${compScore} Your score: ${userScore}`;
-//     }
-//     else if (compScore <userScore) {
-//         alert(`You got lucky... My score: ${compScore} Your score: ${userScore}`);
-//         return `You got lucky... My score: ${compScore} Your score: ${userScore}`;
-//     }
-//     else {
-//         alert(`It's a tie! What a wast of time. My score: ${compScore} Your score: ${userScore}`);
-//         return `It's a tie! What a wast of time. My score: ${compScore} Your score: ${userScore}`;
-//     }  
-// }
+playAgainButton.addEventListener('click', () => {
+    rpsCountdown(300);
+    roundResults.textContent = '';
+    gameResultsMessage.textContent = '';
+    playAgain.removeChild(playAgainButton);
+    officialUserScore = 0;
+    officialCompScore = 0;
+    officialUserScoreDisplay.textContent = `${officialUserScore}`;
+    officialCompScoreDisplay.textContent = `${officialCompScore}`;    
+});
