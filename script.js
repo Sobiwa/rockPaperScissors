@@ -6,7 +6,7 @@ const beginPromptContainer = document.querySelector('#beginPrompt');
         beginPromptContainer.appendChild(beginPrompt);
     const yesButton = document.createElement('button');
         yesButton.classList.add('yesButton');
-        yesButton.style.cssText = 'padding: 8px 16px; font-weight: bold; margin: 16px; width: 100px;';
+        yesButton.style.cssText = 'padding: 8px 16px; font-weight: bold; margin: 16px; width: 100px; color: rgb(90,90,90);';
         yesButton.textContent = 'Yes!';
         beginPromptContainer.appendChild(yesButton);
 
